@@ -110,11 +110,20 @@ exports[`<Nodes /> should match snapshot 1`] = `
             <div
               className="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
             >
-              <p
-                className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              <div
+                className="MuiBox-root css-1f02zzn"
               >
-                Blocks go here
-              </p>
+                <p
+                  className="MuiTypography-root MuiTypography-body1 css-4jbhq0-MuiTypography-root"
+                >
+                  1
+                </p>
+                <p
+                  className="MuiTypography-root MuiTypography-body1 css-6ieeag-MuiTypography-root"
+                >
+                  lorem ipsium
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -214,11 +223,11 @@ exports[`<Nodes /> should match snapshot 1`] = `
             <div
               className="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
             >
-              <p
-                className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              <div
+                className="MuiBox-root css-ef9lw7"
               >
-                Blocks go here
-              </p>
+                No blocks to show
+              </div>
             </div>
           </div>
         </div>

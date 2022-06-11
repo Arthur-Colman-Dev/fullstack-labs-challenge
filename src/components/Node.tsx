@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
@@ -8,9 +8,12 @@ import {
   Box,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
 import colors from "../constants/colors";
 import Status from "./Status";
 import { Node as NodeType } from "../types/Node";
+import { getNodeBlocks } from "../reducers/nodes";
+import Block from "./Block";
 
 type Props = {
   node: NodeType;
@@ -46,6 +49,33 @@ const BoxSummaryContent = styled(Box)({
   paddingRight: 20,
 });
 
+const ErrorBox = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 8,
+  borderRadius: 2,
+  backgroundColor: colors.error,
+})
+
+const EmptyBox = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 8,
+  borderRadius: 2,
+  backgroundColor: colors.primary,
+})
+
+const LoadingBox = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 8,
+  borderRadius: 2,
+  backgroundColor: colors.primary,
+})
+
 const TypographyHeading = styled(Typography)({
   fontSize: 17,
   display: "block",
@@ -60,6 +90,30 @@ const TypographySecondaryHeading = styled(Typography)(({ theme }) => ({
 }));
 
 const Node: React.FC<Props> = ({ node, expanded, toggleNodeExpanded }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNodeBlocks(node))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const renderBlock = (node: NodeType) => {
+    if (node.loadingBlocks) {
+      return (<LoadingBox>Loading...</LoadingBox>)
+    }
+    if (node.blockError) {
+      return (<ErrorBox>Error loading blocks</ErrorBox>)
+    }
+
+    if (node.blocks.length === 0) {
+      return (<EmptyBox>No blocks to show</EmptyBox>)
+    }
+
+    return node.blocks.map((block) => (
+      <Block attributes={block.attributes} key={block.id} />
+    ))
+  }
+
   return (
     <AccordionRoot
       elevation={3}
@@ -80,7 +134,7 @@ const Node: React.FC<Props> = ({ node, expanded, toggleNodeExpanded }) => {
         </BoxSummaryContent>
       </AccordionSummaryContainer>
       <AccordionDetails>
-        <Typography>Blocks go here</Typography>
+        {renderBlock(node)}
       </AccordionDetails>
     </AccordionRoot>
   );

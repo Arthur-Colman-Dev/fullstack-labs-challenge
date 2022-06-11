@@ -16,12 +16,24 @@ describe("<Nodes />", () => {
         online: false,
         name: "Node 1",
         loading: false,
+        loadingBlocks: false,
+        blockError: false,
+        blocks: [{
+          id: 1,
+          attributes: {
+            index: 1,
+            data: "lorem ipsium",
+          }
+        }]
       },
       {
         url: "https://secret-lowlands-62331.herokuapp.com",
         online: false,
         name: "Node 2",
         loading: false,
+        loadingBlocks: false,
+        blockError: false,
+        blocks: [],
       },
     ],
   };
